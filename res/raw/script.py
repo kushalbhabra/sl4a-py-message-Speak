@@ -1,7 +1,7 @@
 import android, time
 droid = android.Android()
 
-allcontacts = droid.contactsGet().result
+allcontacts = droid.contactsGet(None).result
 
 spokenMessageIds=[]
 
