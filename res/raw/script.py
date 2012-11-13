@@ -1,8 +1,21 @@
 import android, time
 droid = android.Android()
-droid.startSensing()
+
+allcontacts = droid.contactsGet().result
+
+spokenMessageIds=[]
+
 while True:
-    result = droid.sensorsGetLight().result
-    if result is not None and result <= 10:
-        droid.ttsSpeak('I can\'t see!')
-    time.sleep(5)
+	time.sleep(1)
+	for messsage in droid.smsGetMessages(True, 'inbox', None ):
+		messageId = message['_id']
+		if  messageId not in spokenMessageIds:	
+			number = message['address']	
+			for contact in allcontacts:
+				if number is contact['number']:
+					say = 'Message from ' + contact['name']
+					droid.ttsSpeak(say)
+					spokenMessageIds.append(messageId)
+			
+	
+	
